@@ -1,0 +1,59 @@
+-- First, drop tables if they exist to ensure a clean setup
+DROP TABLE IF EXISTS tasks;
+DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS team_members;
+
+-- Stores basic information about team members
+CREATE TABLE team_members (
+    member_id VARCHAR(255) PRIMARY KEY,
+    member_name VARCHAR(255) NOT NULL,
+    role VARCHAR(100)
+);
+
+-- Stores high-level information about each project
+CREATE TABLE projects (
+    project_id VARCHAR(255) PRIMARY KEY,
+    project_name VARCHAR(255) NOT NULL UNIQUE,
+    start_date DATE,
+    due_date DATE
+);
+
+-- Stores individual tasks, linked to a project and assigned to a team member
+CREATE TABLE tasks (
+    task_id VARCHAR(255) PRIMARY KEY,
+    project_id VARCHAR(255) REFERENCES projects(project_id) ON DELETE CASCADE,
+    assigned_to_member_id VARCHAR(255) REFERENCES team_members(member_id),
+    task_description TEXT NOT NULL,
+    status VARCHAR(50) NOT NULL CHECK (status IN ('To Do', 'In Progress', 'Done')),
+    estimated_hours DECIMAL(5, 2)
+);
+
+-- First, drop tables if they exist to ensure a clean setup
+DROP TABLE IF EXISTS tasks;
+DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS team_members;
+
+-- Stores basic information about team members
+CREATE TABLE team_members (
+    member_id VARCHAR(255) PRIMARY KEY,
+    member_name VARCHAR(255) NOT NULL,
+    role VARCHAR(100)
+);
+
+-- Stores high-level information about each project
+CREATE TABLE projects (
+    project_id VARCHAR(255) PRIMARY KEY,
+    project_name VARCHAR(255) NOT NULL UNIQUE,
+    start_date DATE,
+    due_date DATE
+);
+
+-- Stores individual tasks, linked to a project and assigned to a team member
+CREATE TABLE tasks (
+    task_id VARCHAR(255) PRIMARY KEY,
+    project_id VARCHAR(255) REFERENCES projects(project_id) ON DELETE CASCADE,
+    assigned_to_member_id VARCHAR(255) REFERENCES team_members(member_id),
+    task_description TEXT NOT NULL,
+    status VARCHAR(50) NOT NULL CHECK (status IN ('To Do', 'In Progress', 'Done')),
+    estimated_hours DECIMAL(5, 2)
+);
